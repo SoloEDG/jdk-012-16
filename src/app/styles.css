@@ -1126,3 +1126,314 @@ textarea {
     margin: 3px 0;
   }
 }
+/* Personal routes & live tour editing */
+.map-wrap {
+  position: relative;
+}
+.map-tour-note {
+  margin: 6px 0 0;
+  font-size: 9px;
+  line-height: 1.6;
+  color: #8b957b;
+  border-left: 2px solid #8a6f2e;
+  padding-left: 7px;
+}
+.map-tour-note.changed {
+  border-left-color: #9a5b3f;
+  color: #c09883;
+}
+.mini-map .map-tour-note {
+  font-size: 8px;
+  border-left: 0;
+  padding-left: 0;
+  color: #bfc8ac;
+}
+.tour-hint {
+  font-size: 9px;
+  line-height: 1.8;
+  color: #7f8a72;
+  margin: 12px 0 0;
+}
+.personal-routes {
+  margin-bottom: 14px;
+}
+.personal-route-card {
+  border: 1px solid #49543c;
+  background: #262f22;
+  margin-top: 8px;
+}
+.personal-route-open {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  width: 100%;
+  text-align: left;
+  padding: 11px 11px 6px;
+  gap: 3px 8px;
+}
+.personal-route-open strong {
+  font-size: 12px;
+  font-weight: 400;
+  grid-column: 1;
+}
+.personal-route-open small {
+  font-size: 8px;
+  color: #93a082;
+  grid-column: 1;
+}
+.personal-route-open span {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  font: 15px Georgia;
+  color: #c9b887;
+}
+.personal-route-actions {
+  display: flex;
+  gap: 4px;
+  padding: 0 8px 8px;
+}
+.personal-route-actions button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 8px;
+  color: #a8b393;
+  border: 1px solid #46513a;
+  padding: 4px 7px;
+}
+.current-tour-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.current-tour-heading h3 {
+  margin: 12px 0;
+}
+.save-state {
+  font-size: 8px;
+  color: #8e9b7c;
+  white-space: nowrap;
+}
+.save-state.dirty {
+  color: #d0b480;
+}
+.completion-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 11px;
+  font-size: 9px;
+  color: #98a687;
+  margin: 9px 0 4px;
+}
+.completion-split strong {
+  color: #d3c494;
+  font-weight: 400;
+}
+.completion-split .historical {
+  flex-basis: 100%;
+  color: #7f8a72;
+  font-size: 8px;
+}
+.tour-status {
+  min-height: 16px;
+}
+.detached-note {
+  border-left: 2px solid #9a5b3f;
+  padding-left: 8px;
+  color: #d3a98f !important;
+  font-size: 9px !important;
+}
+.tour-editor {
+  margin-top: 15px;
+  border-top: 1px solid #45503a;
+  padding-top: 12px;
+}
+.tour-editor-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: #a9b596;
+  margin-bottom: 8px;
+}
+.edit-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.edit-actions button {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 8px;
+  color: #b7c1a3;
+  border: 1px solid #46513a;
+  padding: 4px 6px;
+}
+.stop-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.stop-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 5px;
+  background: #232c1f;
+  border: 1px solid transparent;
+  cursor: grab;
+}
+.stop-row.active {
+  border-color: #a9683f;
+  background: #2f3427;
+}
+.stop-row.drag-over {
+  border-top-color: #cfb57d;
+}
+.stop-grip {
+  color: #69755d;
+  display: flex;
+}
+.stop-index {
+  font-size: 8px;
+  color: #7e8a6f;
+  width: 12px;
+}
+.stop-body {
+  flex: 1;
+  min-width: 0;
+}
+.stop-body strong {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: #d8d5c1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.stop-body small {
+  font-size: 8px;
+  color: #8d9a7e;
+}
+.revisit {
+  font-style: normal;
+  font-size: 7px;
+  border: 1px solid #8a6f3e;
+  color: #d3b981;
+  padding: 0 3px;
+  margin-left: 5px;
+}
+.stop-done {
+  color: #b8c995;
+  display: flex;
+}
+.stop-tools {
+  display: flex;
+  gap: 2px;
+}
+.stop-tools button {
+  width: 19px;
+  height: 19px;
+  display: grid;
+  place-items: center;
+  color: #97a487;
+  border: 1px solid #3e4a35;
+}
+.stop-add {
+  display: flex;
+  gap: 5px;
+  margin-top: 9px;
+}
+.stop-add select {
+  flex: 1;
+  min-width: 0;
+  background: #232d1e;
+  color: #c6cdb4;
+  border: 1px solid #48553a;
+  font-size: 9px;
+  padding: 4px;
+}
+.stop-add button {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  color: #c9c8a7;
+  border: 1px solid #57634a;
+  padding: 4px 8px;
+}
+.audio-owner {
+  display: block;
+  margin-top: 5px;
+  font-size: 8px;
+  font-style: normal;
+  color: #9cab89;
+}
+.audio-owner.owner-stale {
+  color: #d3a98f;
+}
+.route-recap {
+  margin: 18px 0 6px;
+}
+.route-recap-card {
+  border: 1px solid #3e4a34;
+  background: #232c1e;
+  padding: 10px 11px;
+  margin-top: 8px;
+}
+.route-recap-card > strong {
+  font-size: 12px;
+  font-weight: 400;
+}
+.route-recap-card > small {
+  display: block;
+  font-size: 8px;
+  color: #94a080;
+  margin: 4px 0 7px;
+}
+.route-recap-card progress {
+  width: 100%;
+  height: 3px;
+  accent-color: #c3b380;
+}
+.recap-line {
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+  font-size: 9px;
+  line-height: 1.7;
+  color: #a7b295;
+  margin: 7px 0 0;
+}
+.recap-line.done svg {
+  color: #b8c995;
+  margin-top: 2px;
+}
+.recap-line.pending {
+  color: #c2b184;
+}
+.recap-line svg {
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.recap-removed {
+  margin-top: 6px;
+  border-left: 2px solid #6d5844;
+  padding-left: 7px;
+}
+.recap-removed small {
+  display: block;
+  font-size: 8px;
+  color: #9a8e7c;
+  line-height: 1.7;
+}
+.route-recap-card.gone {
+  opacity: 0.75;
+  border-style: dashed;
+}

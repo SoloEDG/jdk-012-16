@@ -16,6 +16,7 @@ import { TourPanel } from "../features/tours";
 import { AudioPlayer } from "../features/narration";
 import { CollectionPanel } from "../features/collection";
 import { artworks, artworkById } from "../shared/catalog";
+import { explainNavigation } from "../features/tours";
 import { useGallery } from "./useGallery";
 export default function App() {
   const g = useGallery();
@@ -24,6 +25,34 @@ export default function App() {
   const [help, setHelp] = useState(false);
   const [side, setSide] = useState("works");
   const a = artworkById(g.catalog.active);
+  const nav = explainNavigation(g.tour.state);
+  const mapTour = nav?.targetArtworkId
+    ? {
+        targetArtworkId: nav.targetArtworkId,
+        continues: nav.continues,
+        label: nav.label,
+      }
+    : undefined;
+  const tourPanel = (
+    <TourPanel
+      state={g.tour.state}
+      routes={g.collection.document.routes}
+      facts={g.collection.document.facts}
+      onStart={g.tour.start}
+      onPause={g.pauseTour}
+      onResume={g.resumeTour}
+      onStop={g.stopTour}
+      onNext={g.nextTour}
+      onReorder={g.tour.reorder}
+      onRemove={g.tour.removeStop}
+      onAdd={g.tour.addStop}
+      onUndo={g.tour.undo}
+      onSave={g.tour.save}
+      onRevert={g.tour.revert}
+      onCopy={g.collection.copyRoute}
+      onDeleteRoute={g.collection.removeRoute}
+    />
+  );
   return (
     <div className="app">
       <header>
@@ -109,16 +138,10 @@ export default function App() {
               active={g.catalog.active}
               onSelect={g.go}
               large
+              tour={mapTour}
             />
           )}
-          <TourPanel
-            state={g.tour.state}
-            onStart={g.tour.start}
-            onPause={g.pauseTour}
-            onResume={g.tour.resume}
-            onStop={g.stopTour}
-            onNext={g.nextTour}
-          />
+          {tourPanel}
           <div className="sidebar-footer">
             <Compass size={15} />
             <span>慢下来，遇见艺术的另一面。</span>
@@ -164,11 +187,19 @@ export default function App() {
             <div className="center-cross">+</div>
             <div className="scene-location">
               <MapPin size={15} />
-              {g.catalog.nearby ? a?.title : "万物之间 · 主展厅"}
+              {nav?.targetArtworkId
+                ? nav.continues
+                  ? `导览目标 · ${artworkById(nav.targetArtworkId)?.title}`
+                  : `当前段完成后离开 · ${artworkById(nav.targetArtworkId)?.title}`
+                : g.catalog.nearby
+                  ? a?.title
+                  : "万物之间 · 主展厅"}
               <small>
-                {g.catalog.nearby
-                  ? "靠近作品 · 可收听讲解"
-                  : "拖动视角，发现你的下一次共鸣"}
+                {nav
+                  ? nav.label
+                  : g.catalog.nearby
+                    ? "靠近作品 · 可收听讲解"
+                    : "拖动视角，发现你的下一次共鸣"}
               </small>
             </div>
             <div
@@ -186,6 +217,7 @@ export default function App() {
                 position={g.walker.position}
                 active={g.catalog.active}
                 onSelect={g.go}
+                tour={mapTour}
               />
             </div>
             <div className="scene-controls">
@@ -250,14 +282,7 @@ export default function App() {
                 <h2>沿着共鸣，出发。</h2>
                 <p>选择一条路线，空间导航与作品讲解将陪伴你完成这段旅程。</p>
               </div>
-              <TourPanel
-                state={g.tour.state}
-                onStart={g.tour.start}
-                onPause={g.pauseTour}
-                onResume={g.tour.resume}
-                onStop={g.stopTour}
-                onNext={g.nextTour}
-              />
+              {tourPanel}
             </>
           ) : (
             <ArtworkDetail
@@ -269,7 +294,11 @@ export default function App() {
                 if (g.catalog.active) g.collection.toggle(g.catalog.active);
               }}
               onListen={() => {
-                if (g.catalog.active) g.narration.play(g.catalog.active);
+                if (g.catalog.active) {
+                  // Free listening is not a tour segment: it carries no
+                  // completion token, so it can never complete a tour stop.
+                  g.narration.play(g.catalog.active);
+                }
               }}
               onGo={() => {
                 if (g.catalog.active) g.go(g.catalog.active);
@@ -296,6 +325,7 @@ export default function App() {
         state={g.narration.state}
         caption={g.narration.caption}
         supported={g.narration.supported}
+        tour={g.tour.state}
         onToggle={g.narration.toggle}
         onSeek={g.narration.seek}
         onRate={g.narration.rate}
